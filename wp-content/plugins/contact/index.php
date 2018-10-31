@@ -34,17 +34,17 @@ function submit_form() {
 
 function contact_install() {
 	global $wpdb;
-	$table_name = $wpdb->prefix . 'liveshoutbox';
-	$sql = "CREATE TABLE $table_name (
-		id mediumint(9) NOT NULL AUTO_INCREMENT,
-		time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		name tinytext NOT NULL,
-		text text NOT NULL,
-		url varchar(55) DEFAULT '' NOT NULL,
-		PRIMARY KEY  (id)
-	) ";
+	$table_name = $wpdb->prefix . 'subscribers';
+	$sql = "CREATE TABLE $table_name  (
+			  id int(11) NOT NULL,
+			  name varchar(255) NOT NULL,
+			  email varchar(255) NOT NULL,
+			  created_datetime datetime NOT NULL
+			) ENGINE=InnoDB DEFAULT CHARSET=latin1;ALTER TABLE wp_subscribers
+			  ADD PRIMARY KEY (id);ALTER TABLE wp_subscribers
+			  MODIFY id int(11) NOT NULL AUTO_INCREMENT;";
 
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	$wpdb->query($sql);
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	dbDelta($sql);
 }
 ?>
